@@ -1,0 +1,10 @@
+name: fantasy-golf
+recipe: laravel
+config:
+  webroot: ./public
+  php: '8.2'
+  composer_version: '2.6.6'
+  via: nginx
+  database: mariadb
+  cache: redis
+  xdebug: true
