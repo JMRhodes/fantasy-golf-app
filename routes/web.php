@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\PlayerController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models;
@@ -30,11 +31,11 @@ Route::get( '/teams', function () {
     ] );
 } )->middleware( [ 'auth', 'verified' ] )->name( 'teams' );
 
-Route::get( '/players', function () {
-    return Inertia::render( 'Players/Index', [
-        'players' => Models\Player::all()
-    ] );
-} )->middleware( [ 'auth', 'verified' ] )->name( 'players' );
+Route::middleware( 'auth' )->group( function () {
+    Route::get( '/players', [ PlayerController::class, 'index' ] )->name( 'players.index' );
+    Route::get( '/players/add', [ PlayerController::class, 'create' ] )->name( 'players.add' );
+    Route::post( '/players/add', [ PlayerController::class, 'store' ] )->name( 'players.add' );
+} );
 
 Route::middleware( 'auth' )->group( function () {
     Route::get( '/tournaments', [ TournamentController::class, 'index' ] )->name( 'tournaments.index' );

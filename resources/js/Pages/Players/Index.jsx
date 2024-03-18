@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, usePage} from '@inertiajs/react';
+import {Head, Link, usePage} from '@inertiajs/react';
 
 export default function Index({ auth }) {
     const { players } = usePage().props;
@@ -7,7 +7,9 @@ export default function Index({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">All Players</h2>}
+            header={<div className="flex items-baseline"><h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                All Players
+            </h2><Link className="px-4 text-xs text-zinc-500 hover:text-indigo-500" href={route('players.add')}>(add)</Link></div>}
         >
             <Head title="Players" />
 

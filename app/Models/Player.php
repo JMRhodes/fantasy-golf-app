@@ -39,6 +39,10 @@ class Player extends Model {
         'salary',
     ];
 
+    public function getFullNameAttribute(): string {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function teams(): BelongsToMany {
         return $this->belongsToMany(
             Team::class,

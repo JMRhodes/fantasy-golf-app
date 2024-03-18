@@ -43,11 +43,11 @@ class TournamentController extends Controller {
         //                $faker->randomFloat( 0, 1, 50 )
         //            );
         //        }
-        $result = Result::create( [
-            'tournament_id' => $tournament->id,
-            'points'        => 20,
-            'position'      => 2
-        ] )->players()->attach(44);
+//        $result = Result::create( [
+//            'tournament_id' => $tournament->id,
+//            'points'        => 15,
+//            'position'      => 3
+//        ] )->players()->attach(50);
 
         return to_route( 'tournaments.index' );
     }
