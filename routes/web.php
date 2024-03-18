@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models;
 
@@ -20,23 +20,27 @@ Route::get( '/', function () {
 } )->middleware( [ 'auth', 'verified' ] )->name( 'dashboard' );
 
 Route::get( '/teams', function () {
-    $user = Models\User::find(1);
+    $user = Models\User::find( 1 );
 
     return Inertia::render( 'Teams/Index', [
         'teams' => $user
             ->teams()
-            ->where("user_id", 1)
+            ->where( "user_id", 1 )
             ->get()
     ] );
 } )->middleware( [ 'auth', 'verified' ] )->name( 'teams' );
 
 Route::get( '/players', function () {
-    return Inertia::render( 'Players/Index' );
+    return Inertia::render( 'Players/Index', [
+        'players' => Models\Player::all()
+    ] );
 } )->middleware( [ 'auth', 'verified' ] )->name( 'players' );
 
-Route::get( '/tournaments', function () {
-    return Inertia::render( 'Tournaments/Index' );
-} )->middleware( [ 'auth', 'verified' ] )->name( 'tournaments' );
+Route::middleware( 'auth' )->group( function () {
+    Route::get( '/tournaments', [ TournamentController::class, 'index' ] )->name( 'tournaments.index' );
+    Route::get( '/tournaments/add', [ TournamentController::class, 'create' ] )->name( 'tournaments.add' );
+    Route::post( '/tournaments/add', [ TournamentController::class, 'store' ] )->name( 'tournaments.add' );
+} );
 
 Route::middleware( 'auth' )->group( function () {
     Route::get( '/profile', [ ProfileController::class, 'edit' ] )->name( 'profile.edit' );

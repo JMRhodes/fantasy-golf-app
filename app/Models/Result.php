@@ -7,23 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @mixin IdeHelperTeam
+ * @mixin IdeHelperResult
  */
-class Team extends Model {
+class Result extends Model
+{
     use HasFactory;
 
-    protected $table = 'teams';
+    protected $table = 'results';
 
     protected $fillable = [
-        'user_id',
-        'name'
+        'tournament_id',
+        'points',
+        'position'
     ];
 
     public function players(): BelongsToMany {
         return $this->belongsToMany(
             Player::class,
-            'teams_players',
-            'team_id',
+            'players_results',
+            'result_id',
             'player_id'
         );
     }
