@@ -1,14 +1,15 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import {router} from '@inertiajs/react';
+import {router, useForm, usePage} from '@inertiajs/react';
 import {useState} from "react";
 
-export default function AddPlayerForm({className = ''}) {
-    const [values, setValues] = useState({
-        first_name: "",
-        last_name: "",
-        salary: "0",
-    })
+export default function EditPlayerForm({className = ''}) {
+    const {player} = usePage().props;
+    const {data, setData, errors, put, reset, processing, recentlySuccessful} = useForm({
+        first_name: player.first_name,
+        last_name: player.last_name,
+        salary: player.salary,
+    });
 
     function handleChange(e) {
         const key = e.target.id;
@@ -22,7 +23,7 @@ export default function AddPlayerForm({className = ''}) {
     function handleSubmit(e) {
         e.preventDefault()
 
-        router.post('/players/store', values)
+        put(route('players.update', player.id), data);
     }
 
     return (
@@ -45,8 +46,9 @@ export default function AddPlayerForm({className = ''}) {
                         <div className="mt-2">
                             <TextInput id="first_name"
                                        name="first_name"
+                                       value={data.first_name}
+                                       onChange={(e) => setData('first_name', e.target.value)}
                                        required
-                                       onChange={handleChange}
                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                         </div>
                     </div>
@@ -59,7 +61,8 @@ export default function AddPlayerForm({className = ''}) {
                             <TextInput id="last_name"
                                        name="last_name"
                                        required
-                                       onChange={handleChange}
+                                       value={data.last_name}
+                                       onChange={(e) => setData('last_name', e.target.value)}
                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                         </div>
                     </div>
@@ -69,7 +72,9 @@ export default function AddPlayerForm({className = ''}) {
                     <div className="mt-2">
                         <TextInput name="salary"
                                    id="salary"
-                                   onChange={handleChange}
+                                   required
+                                   value={data.salary}
+                                   onChange={(e) => setData('salary', e.target.value)}
                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                     </div>
                 </div>
@@ -90,7 +95,7 @@ export default function AddPlayerForm({className = ''}) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton>Add</PrimaryButton>
+                    <PrimaryButton>Update</PrimaryButton>
                 </div>
             </form>
         </section>

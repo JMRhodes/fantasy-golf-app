@@ -33,14 +33,20 @@ Route::get( '/teams', function () {
 
 Route::middleware( 'auth' )->group( function () {
     Route::get( '/players', [ PlayerController::class, 'index' ] )->name( 'players.index' );
-    Route::get( '/players/add', [ PlayerController::class, 'create' ] )->name( 'players.add' );
-    Route::post( '/players/add', [ PlayerController::class, 'store' ] )->name( 'players.add' );
+    Route::get( '/players/create', [ PlayerController::class, 'create' ] )->name( 'players.create' );
+    Route::get( '/players/{id}/edit', [ PlayerController::class, 'edit' ] )->name( 'players.edit' );
+    Route::post( '/players/store', [ PlayerController::class, 'store' ] )->name( 'players.store' );
+    Route::put( '/players/{id}', [ PlayerController::class, 'update' ] )->name( 'players.update' );
+    Route::delete( '/players/{id}', [ PlayerController::class, 'destroy' ] )->name( 'players.destroy' );
 } );
 
 Route::middleware( 'auth' )->group( function () {
     Route::get( '/tournaments', [ TournamentController::class, 'index' ] )->name( 'tournaments.index' );
-    Route::get( '/tournaments/add', [ TournamentController::class, 'create' ] )->name( 'tournaments.add' );
-    Route::post( '/tournaments/add', [ TournamentController::class, 'store' ] )->name( 'tournaments.add' );
+    Route::get( '/tournaments/create', [ TournamentController::class, 'create' ] )->name( 'tournaments.create' );
+    Route::get( '/tournaments/{id}/edit', [ TournamentController::class, 'edit' ] )->name( 'tournaments.edit' );
+    Route::post( '/tournaments/create', [ TournamentController::class, 'store' ] )->name( 'tournaments.store' );
+    Route::patch( '/tournaments/{id}', [ TournamentController::class, 'update' ] )->name( 'tournaments.update' );
+    Route::delete( '/tournaments/{id}', [ TournamentController::class, 'destroy' ] )->name( 'tournaments.destroy' );
 } );
 
 Route::middleware( 'auth' )->group( function () {

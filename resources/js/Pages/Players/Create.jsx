@@ -4,7 +4,7 @@ import {useState} from "react";
 import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfileInformationForm.jsx";
 import AddPlayerForm from "@/Pages/Players/Partials/AddPlayerForm.jsx";
 
-export default function AddPlayer({auth}) {
+export default function CreatePlayer({auth}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
