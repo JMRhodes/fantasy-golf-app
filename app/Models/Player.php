@@ -15,20 +15,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tournament> $tournaments
  * @property-read int|null $tournaments_count
- * @method static \Database\Factories\PlayerFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\PlayerFactory factory( $count = null, $state = [] )
  * @method static \Illuminate\Database\Eloquent\Builder|Player newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Player newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Player query()
- * @method static \Illuminate\Database\Eloquent\Builder|Player whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Player whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Player whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Player whereSalary($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Player whereFirstName( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|Player whereId( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|Player whereLastName( $value )
+ * @method static \Illuminate\Database\Eloquent\Builder|Player whereSalary( $value )
  * @mixin \Eloquent
  * @mixin IdeHelperPlayer
  */
 class Player extends Model {
     use HasFactory;
 
+    /**
+     * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
+     */
     protected $table = 'players';
 
     public $timestamps = false;
@@ -37,6 +40,7 @@ class Player extends Model {
         'first_name',
         'last_name',
         'salary',
+        'photo',
     ];
 
     public function getFullNameAttribute(): string {

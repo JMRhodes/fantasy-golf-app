@@ -9,7 +9,7 @@ export default function Index({auth}) {
             user={auth.user}
             header={<div className="flex items-baseline"><h2 className="font-semibold text-xl text-gray-800 leading-tight">
                 Tournaments
-            </h2><Link className="px-4 text-xs text-zinc-500 hover:text-indigo-500" href={route('tournaments.add')}>(add)</Link></div>}
+            </h2><Link className="px-4 text-xs text-zinc-500 hover:text-indigo-500" href={route('tournaments.create')}>(create)</Link></div>}
         >
             <Head title="Tournaments"/>
 

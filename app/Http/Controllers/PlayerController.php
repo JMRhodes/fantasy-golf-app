@@ -18,6 +18,8 @@ class PlayerController extends Controller {
 
                 return [
                     'id'         => $player->id,
+                    'photo'      => $player->photo ?: "https://api.dicebear.com/8.x/initials/svg?seed={$player->full_name}",
+                    'full_name'  => $player->full_name,
                     'first_name' => $player->first_name,
                     'last_name'  => $player->last_name,
                     'salary'     => $currency->format( $player->salary ),
@@ -43,6 +45,7 @@ class PlayerController extends Controller {
             'first_name' => [ 'required', 'max:18' ],
             'last_name'  => [ 'required', 'max:18' ],
             'salary'     => [ 'required', 'max:6' ],
+            'photo'      => [ 'mimes:jpg,bmp,png' ],
         ] ) );
 
         return to_route( 'players.index' );
@@ -59,8 +62,16 @@ class PlayerController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit( string $id ) {
+        $player = Player::find( $id );
         return Inertia::render( 'Players/Edit', [
-            'player' => Player::find( $id )
+            'player' => [
+                'id'         => $player->id,
+                'photo'      => $player->photo,
+                'full_name'  => $player->full_name,
+                'first_name' => $player->first_name,
+                'last_name'  => $player->last_name,
+                'salary'     => $player->salary
+            ]
         ] );
     }
 
@@ -71,7 +82,8 @@ class PlayerController extends Controller {
         $player             = Player::find( $id );
         $player->first_name = $request->input( 'first_name' );
         $player->last_name  = $request->input( 'last_name' );
-        $player->salary     = $request->input( 'salary' );;
+        $player->salary     = $request->input( 'salary' );
+        $player->photo      = $request->input( 'photo', ) ?? "https://api.dicebear.com/8.x/initials/svg?seed={$player->full_name}";
 
         $player->save();
 
